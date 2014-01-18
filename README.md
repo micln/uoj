@@ -20,3 +20,20 @@ PS：平均每条记录有十个字段
 ###Author
 
 zhrlnt@gmail.com
+
+
+====
+
+###Create a new repository on the command line
+
+touch README.md
+git init
+git add README.md
+git commit -m "first commit"
+git remote add origin https://github.com/micln/uoj.git
+git push -u origin master
+
+###Push an existing repository from the command line
+
+git remote add origin https://github.com/micln/uoj.git
+git push -u origin master
