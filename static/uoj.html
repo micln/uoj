@@ -1,0 +1,22 @@
+<html>
+<head>
+	<title>uoj</title>
+	<meta charset='utf-8'></head>
+<body>
+	<div id='main'>
+		<form action='http://127.0.0.1:8080/user/login' method="post">
+			<input name="userid">
+			<input name="password">
+			<input type="submit" ></form>
+		<form action='http://127.0.0.1:8080/user/logout' method="post">
+			<input type="submit" value="Logout"></form>
+	</div>
+</body>
+	<script type="text/javascript">
+		xmlhttp = new XMLHttpRequest();
+		xmlhttp.open("GET","http://localhost:8080/p/1032",false);
+		xmlhttp.send();
+		document.getElementById("main").innerHTML=xmlhttp.readyState;
+	</script>
+</html>
+	
