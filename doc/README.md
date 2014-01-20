@@ -18,6 +18,7 @@ localhost/u/:uid
 
 - localhost 为主机名，建议使用 APP_HOST 常量
 - 类 :uid 以冒号开始的字段表示参数，使用时请替换为实际数据。如 localhost/u/zhr 表示获取zhr的信息。
+- 
 
 ### 获取数据
 
@@ -42,16 +43,16 @@ localhost/p_tag/:tag	// 获取特定标签的题目
 获取动态信息
 
 ```
-localhost/m 		// 获取所有人的动态
+localhost/m 			// 获取所有人的动态
 
-localhost/m_user/	// 查看某人动态。
+localhost/m_user/:uid	// 查看某人动态。
 
-localhost/m_tag/	// 获取特定标签的动态
+localhost/m_tag/:tag	// 获取特定标签的动态
 
-localhost/m_pid/	// 与某道题相关的讨论
+localhost/m_pid/:pid	// 与某道题相关的讨论
 ```
 
-- 已登陆用户查看自己的动态时，服务器会返回所有消息，查看他人动态会返回公开消息。无需客户端验证。
+>已登陆用户查看自己的动态时，服务器会返回所有消息，查看他人动态会返回公开消息。无需客户端验证。
 
 获取作业信息
 
