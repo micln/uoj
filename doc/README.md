@@ -18,7 +18,7 @@ localhost/u/:uid
 
 - localhost 为主机名，建议使用 APP_HOST 常量
 - 类 :uid 以冒号开始的字段表示参数，使用时请替换为实际数据。如 localhost/u/zhr 表示获取zhr的信息。
-- 
+ 
 
 ### 获取数据
 
