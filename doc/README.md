@@ -28,6 +28,20 @@ localhost/u/:uid 	// 获取某个用户的信息。
 localhost/p 		// 获取题目列表
 
 localhost/p/:pid	// 获取某个题目的信息
+
+localhost/p_tag		// 根据标签获取题目列表
+```
+
+获取动态信息
+
+```
+localhost/m 		// 获取所有人的动态
+
+localhost/m_user/	// 查看某人动态。
+
+localhost/m_tag/	// 获取
+
+localhost/m_pid/
 ```
 
 获取作业信息

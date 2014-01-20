@@ -13,11 +13,13 @@ type Ops struct {
 	Info interface{}
 }
 
+// get a number in string
 func Str2n(s string) (res int) {
 	fmt.Sscanf(s, "%d", &res)
 	return
 }
 
+// encode
 func Sha120(s string) string {
 	h := sha1.New()
 	io.WriteString(h, s)

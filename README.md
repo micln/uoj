@@ -1,6 +1,6 @@
 #USC Online Judged
 
-uoj的Web端，采用 beego + MongoDB + MySQL 搭建。
+uoj的Web端，采用 beego + MySQL 搭建。
 
 网址： www.cs203.net
 

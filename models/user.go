@@ -24,7 +24,7 @@ type User struct {
 	Live    bool
 }
 
-// Sample field ,Look in Other
+// Sample field ,looked in the third view
 type Userspl struct {
 	Uid    string `orm:"pk;column(user_id)"`
 	Nick   string
@@ -38,12 +38,13 @@ const (
 	User_PAGE_SIZE = 10
 )
 
+// Add a user
 func AddUser(u User) (err error) {
 	err = o.Insert(u)
 	return
 }
 
-// Get all field
+// Get all fields for someone
 func GetUserById(uid string) (user User, err error) {
 	user = User{Uid: uid}
 	err = o.Read(&user)
@@ -51,7 +52,7 @@ func GetUserById(uid string) (user User, err error) {
 	return
 }
 
-// Sample field ,Look in Other
+// Get some field for someone in the third view
 func LookUserById(uid string) (user Userspl, err error) {
 	usera := User{}
 	o.QueryTable("user").Filter("Uid", uid).One(&usera, "Uid", "Nick", "Email", "Team", "Submit", "Ac")
@@ -59,11 +60,13 @@ func LookUserById(uid string) (user Userspl, err error) {
 	return
 }
 
+// Get all fields for all users
 func GetUsers(idx int) (users []User) {
 	o.QueryTable("user").Limit(User_PAGE_SIZE, idx).OrderBy("-Ac").All(&users)
 	return
 }
 
+// Get some field for all in the third view
 func LookUsers(idx int) []Userspl {
 	usersa, users := []User{}, [User_PAGE_SIZE]Userspl{}
 	o.QueryTable("user").Limit(User_PAGE_SIZE, idx).OrderBy("-Ac").All(&usersa)
@@ -73,12 +76,14 @@ func LookUsers(idx int) []Userspl {
 	return users[:]
 }
 
+// encode the password
 func PwGen(pass string) (hash string) {
 	salt := "8bzm"
 	hash = com.Base64Encode(Sha120(com.Md5(pass)+salt) + salt)
 	return
 }
 
+// check whether the password is correct
 func PwCheck(pass, saved string) bool {
 	svd, err := com.Base64Decode(saved)
 	if err != nil {

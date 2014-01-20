@@ -8,9 +8,9 @@ import (
 func init() {
 	//	beego.RESTRouter("/object", &controllers.ObjectController{})
 
-	beego.Router("/user/login", &controllers.UserController{}, `post:Login`)
-	beego.Router("/user/logout", &controllers.UserController{}, `post:Logout`)
-	beego.Router("/user/join", &controllers.UserController{}, `post:Join`)
+	beego.Router("/u_login", &controllers.UserController{}, `post:Login`)
+	beego.Router("/u_logout", &controllers.UserController{}, `post:Logout`)
+	beego.Router("/u_join", &controllers.UserController{}, `post:Join`)
 
 	beego.Router("/u", &controllers.UserController{}, `get:Getu`)
 	beego.Router("/u/:uid", &controllers.UserController{}, `get:Getu`)
@@ -20,8 +20,8 @@ func init() {
 	// beego.Router("/m/tag/:t", &controllers.MsgController{})
 
 	beego.Router("/p", &controllers.ProblemController{})
-	beego.Router("/p/tag/:tag", &controllers.ProblemController{}, `get:Tag`)
-	beego.Router("/p/submit/:pid", &controllers.ProblemController{})
+	beego.Router("/p_tag/:tag", &controllers.ProblemController{}, `get:Tag`)
+	beego.Router("/p_submit/:pid", &controllers.ProblemController{})
 	beego.Router("/p/:pid", &controllers.ProblemController{})
 
 	// beego.Router("/t", &controllers.TaskController{})

@@ -24,18 +24,22 @@ func init() {
 	//	Old2New()
 }
 
+// Read all the problems start with index.
 func ReadPros(idx int) (pros []Problem) {
 	qs := o.QueryTable("problem")
+
 	qs.Filter("Id__gte", idx).Limit(PRO_PAGE_SIZE, idx).All(&pros, "Id", "Title", "Tag", "Tot", "Ac")
 	return
 }
 
+// Read the problems by Tag
 func ReadProsByTag(tag string, idx int) (pros []Problem) {
 	qs := o.QueryTable("problem")
 	qs.Filter("Tag__icontains", tag).Limit(PRO_PAGE_SIZE, idx).OrderBy("Id").All(&pros, "Id", "Title", "Tag", "Tot", "Ac")
 	return
 }
 
+// Read the problem[Id]
 func ReadProById(Pid int) (pro Problem, err error) {
 	pro = Problem{Id: Pid}
 	err = o.Read(&pro)
@@ -45,6 +49,7 @@ func ReadProById(Pid int) (pro Problem, err error) {
 	return
 }
 
+// change the problem format into markdown
 func Old2New() {
 
 	for pid := 1000; pid <= 1139; pid++ {
