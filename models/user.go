@@ -38,45 +38,45 @@ const (
 	User_PAGE_SIZE = 10
 )
 
+func AddUser(u User) (err error) {
+	err = o.Insert(u)
+	return
+}
+
 // Get all field
 func GetUserById(uid string) (user User, err error) {
-	// qs := o.QueryTable("user")
-	// qs.Filter("Uid", uid).One(&user)
 	user = User{Uid: uid}
 	err = o.Read(&user)
+	// o.QueryTable("user").Filter("Uid", uid).One(&user)
 	return
 }
 
 // Sample field ,Look in Other
 func LookUserById(uid string) (user Userspl, err error) {
 	usera := User{}
-	qs := o.QueryTable("user")
-	qs.Filter("Uid", uid).One(&usera, "Uid", "Nick", "Email", "Team", "Submit", "Ac")
+	o.QueryTable("user").Filter("Uid", uid).One(&usera, "Uid", "Nick", "Email", "Team", "Submit", "Ac")
 	user = Userspl{usera.Uid, usera.Nick, usera.Email, usera.Team, usera.Submit, usera.Ac}
 	return
 }
 
 func GetUsers(idx int) (users []User) {
-	qs := o.QueryTable("user")
-	qs.Limit(User_PAGE_SIZE, idx).OrderBy("-Ac").All(&users)
+	o.QueryTable("user").Limit(User_PAGE_SIZE, idx).OrderBy("-Ac").All(&users)
 	return
 }
 
 func LookUsers(idx int) []Userspl {
-	usersa := []User{}
-	qs := o.QueryTable("user")
-	qs.Limit(User_PAGE_SIZE, idx).OrderBy("-Ac").All(&usersa)
-	users := [User_PAGE_SIZE]Userspl{}
+	usersa, users := []User{}, [User_PAGE_SIZE]Userspl{}
+	o.QueryTable("user").Limit(User_PAGE_SIZE, idx).OrderBy("-Ac").All(&usersa)
 	for k, v := range usersa {
 		users[k] = Userspl{v.Uid, v.Nick, v.Email, v.Team, v.Submit, v.Ac}
 	}
 	return users[:]
 }
 
-func PwGen(pass string) string {
+func PwGen(pass string) (hash string) {
 	salt := "8bzm"
-	hash := com.Base64Encode(Sha120(com.Md5(pass)+salt) + salt)
-	return hash
+	hash = com.Base64Encode(Sha120(com.Md5(pass)+salt) + salt)
+	return
 }
 
 func PwCheck(pass, saved string) bool {

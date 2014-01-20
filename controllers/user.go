@@ -2,6 +2,7 @@ package controllers
 
 import (
 	"fmt"
+	"time"
 	//	"encoding/json"
 	"github.com/astaxie/beego"
 	"uoj/models"
@@ -34,6 +35,38 @@ func (this *UserController) Getu() {
 	}
 }
 
+func (this *UserController) Join() {
+	uid, team, nick, pwd, pwd2, email, sid, sname :=
+		this.GetString("userid"), this.GetString("team"),
+		this.GetString("nickname"), this.GetString("password"),
+		this.GetString("password2"), this.GetString("emailaddr"),
+		this.GetString("studentid"), this.GetString("realname")
+	var res models.Ops
+	switch {
+	case pwd != pwd2 || models.BadMail(email):
+		res.Info = 202 // 信息不匹配
+	case models.HasNull(uid, pwd, email, sid, sname):
+		res.Info = 201 // 信息不完整
+	default:
+		u, _ := models.GetUserById(uid)
+		if len(u.Pwd) != 0 {
+			res.Info = 210 // 用户已存在
+		} else {
+			u := models.User{
+				uid, nick, pwd, email, time.Now(), team,
+				sid, sname, 0, 0, 0, fmt.Sprintf("%s", this.Ctx.Request.RemoteAddr), true,
+			}
+			if err := models.AddUser(u); err == nil {
+				res.OK = true
+				res.Info = u
+			} else {
+				res.Info = err
+			}
+		}
+	}
+	this.Data["json"] = res
+}
+
 func (this *UserController) Login() {
 	uid := this.GetString("userid")
 	pass := this.GetString("password")
@@ -41,7 +74,7 @@ func (this *UserController) Login() {
 	var err error
 	var res models.Ops
 	if user, err = models.GetUserById(uid); err != nil {
-		res.Info = "No Such User."
+		res.Info = 200
 	} else {
 		if models.PwCheck(pass, user.Pwd) {
 			this.SetSession("uid", uid)
@@ -49,7 +82,7 @@ func (this *UserController) Login() {
 			res.OK = true
 			res.Info = user
 		} else {
-			res.Info = "Password Wrong."
+			res.Info = 202
 		}
 	}
 	this.Data["json"] = res
@@ -60,7 +93,7 @@ func (this *UserController) Logout() {
 		this.Data["json"] = fmt.Sprint(this.GetSession("uid")) + "Exit."
 		this.DelSession("uid")
 	} else {
-		this.Data["json"] = "No User."
+		this.Data["json"] = 200
 	}
 }
 

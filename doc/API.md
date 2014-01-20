@@ -11,15 +11,32 @@
 
 ## 详细说明
 
-### 获取用户信息
+### 获取数据
 
-获取用户列表
+获取用户信息
 
-    localhost/u
+```
+localhost/u 		// 获取用户列表
 
-获取某个用户的信息
+localhost/u/:uid 	// 获取某个用户的信息。
+					// 例如：localhost/u/admin
+````
 
-    localhst/u/:uid 
+获取题目信息
+
+```
+localhost/p 		// 获取题目列表
+
+localhost/p/:pid	// 获取某个题目的信息
+```
+
+获取作业信息
+
+```
+localhost/t/ 		// 获取比赛列表
+
+localhost/t/:tid/	// 获取某场比赛的信息
+```
 
 ### 用户行为
 
@@ -55,7 +72,7 @@
 	- 参数列表
 
 		| 参数| 描述 | 备注 |  
-		|:---|:------|:-----|
+		|:-----:|:------|:-----|
 		| userid	|  | 必需。不可更改。|
 		| nickname  |  默认为 userid。 ||
 		| password  |    | 必需。|
@@ -63,4 +80,5 @@
 		| emailaddr |   | 必需。需要验证邮箱。|
 		| studentid |    | 必需。不可更改。|
 		| realname  |    | 必需。不可更改。|
+
 
