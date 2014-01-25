@@ -4,10 +4,11 @@ import (
 	"time"
 )
 
-var (
-	Msgs []*Msg
-)
-
+/*
+	- sb sloved a problem.
+	- sb publish a article.
+	-
+*/
 type Msg struct {
 	Id    int
 	Uid   string

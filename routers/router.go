@@ -14,6 +14,7 @@ func init() {
 
 	beego.Router("/u", &controllers.UserController{}, `get:Getu`)
 	beego.Router("/u/:uid", &controllers.UserController{}, `get:Getu`)
+	beego.Router("/u_px/:uid", &controllers.UserController{}, `get:GetuPx`)
 
 	// beego.Router("/m", &controllers.MsgController{})
 	// beego.Router("/m/u/:uid", &controllers.MsgController{})

@@ -2,9 +2,8 @@ package controllers
 
 import (
 	"fmt"
-	"time"
-	//	"encoding/json"
 	"github.com/astaxie/beego"
+	"time"
 	"uoj/models"
 )
 
@@ -33,6 +32,12 @@ func (this *UserController) Getu() {
 		obs := models.LookUsers(start)
 		this.Data["json"] = obs
 	}
+}
+
+func (this *UserController) GetuPx() {
+	pk := this.Ctx.Input.Params[":uid"]
+	beego.Trace(pk)
+	this.Data["json"] = models.LookUsersPx(pk)
 }
 
 func (this *UserController) Join() {

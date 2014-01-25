@@ -28,6 +28,8 @@
 localhost/u 		// 获取用户列表
 
 localhost/u/:uid 	// 获取某个用户的信息
+
+locahost/u_px/:uid 	// 按照学号前缀获取用户列表（一次获取所有用户。page参数无效）
 ````
 
 获取题目信息

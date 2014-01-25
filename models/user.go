@@ -3,7 +3,7 @@ package models
 import (
 	//	"fmt"
 	"github.com/Unknwon/com"
-	_ "github.com/astaxie/beego"
+	//	"github.com/astaxie/beego"
 	"github.com/astaxie/beego/orm"
 	"time"
 )
@@ -25,13 +25,15 @@ type User struct {
 }
 
 // Sample field ,looked in the third view
-type Userspl struct {
-	Uid    string `orm:"pk;column(user_id)"`
-	Nick   string
-	Email  string
-	Team   string
-	Submit int
-	Ac     int `orm:"column(solved)"`
+type Usertpl struct {
+	UserId      string
+	Nickname    string
+	EmailAddr   string
+	Team        string
+	Submit      int
+	Solved      int
+	StudentId   string
+	StudentName string
 }
 
 const (
@@ -40,7 +42,7 @@ const (
 
 // Add a user
 func AddUser(u User) (err error) {
-	err = o.Insert(u)
+	_, err = o.Insert(u)
 	return
 }
 
@@ -52,28 +54,38 @@ func GetUserById(uid string) (user User, err error) {
 	return
 }
 
-// Get some field for someone in the third view
-func LookUserById(uid string) (user Userspl, err error) {
-	usera := User{}
-	o.QueryTable("user").Filter("Uid", uid).One(&usera, "Uid", "Nick", "Email", "Team", "Submit", "Ac")
-	user = Userspl{usera.Uid, usera.Nick, usera.Email, usera.Team, usera.Submit, usera.Ac}
-	return
-}
-
 // Get all fields for all users
 func GetUsers(idx int) (users []User) {
 	o.QueryTable("user").Limit(User_PAGE_SIZE, idx).OrderBy("-Ac").All(&users)
 	return
 }
 
+// Get some field for someone in the third view
+func LookUserById(uid string) (user Usertpl, err error) {
+	usera := User{}
+	o.QueryTable("user").Filter("Uid", uid).One(&usera, "Uid", "Nick", "Email", "Team", "Submit", "Ac", "Sid", "Sname")
+	user = Usertpl{usera.Uid, usera.Nick, usera.Email, usera.Team, usera.Submit, usera.Ac, usera.Sid, usera.Sname}
+	return
+}
+
 // Get some field for all in the third view
-func LookUsers(idx int) []Userspl {
-	usersa, users := []User{}, [User_PAGE_SIZE]Userspl{}
+func LookUsers(idx int) []Usertpl {
+	usersa, users := []User{}, [User_PAGE_SIZE]Usertpl{}
 	o.QueryTable("user").Limit(User_PAGE_SIZE, idx).OrderBy("-Ac").All(&usersa)
 	for k, v := range usersa {
-		users[k] = Userspl{v.Uid, v.Nick, v.Email, v.Team, v.Submit, v.Ac}
+		users[k] = Usertpl{v.Uid, v.Nick, v.Email, v.Team, v.Submit, v.Ac, v.Sid, v.Sname}
 	}
 	return users[:]
+}
+
+// Look users by studentId Prefix
+func LookUsersPx(uid string) []Usertpl {
+	usera, users := []User{}, []Usertpl{}
+	o.QueryTable("user").Filter("Sid__icontains", uid).OrderBy("-Ac").All(&usera)
+	for _, v := range usera {
+		users = append(users, Usertpl{v.Uid, v.Nick, v.Email, v.Team, v.Submit, v.Ac, v.Sid, v.Sname})
+	}
+	return users
 }
 
 // encode the password

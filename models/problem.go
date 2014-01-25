@@ -6,7 +6,9 @@ import (
 	//"strings"
 )
 
-var PRO_PAGE_SIZE int = 8
+const (
+	PRO_PAGE_SIZE = 8
+)
 
 type Problem struct {
 	Id    int    `orm:"pk;column(problem_id)"`

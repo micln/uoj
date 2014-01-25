@@ -25,14 +25,15 @@ zhrlnt@gmail.com
 
 ###Create a new repository on the command line
 
-touch README.md
-git init
-git add README.md
-git commit -m "first commit"
-git remote add res https://github.com/micln/uoj.git
+touch README.md  
+git init  
+git add README.md  
+git commit -m "first commit"  
+git remote add res https://github.com/micln/uoj.git  
 git push -u res master
 
 ###Push an existing repository from the command line
 
-git remote add res 	https://github.com/micln/uoj.git
+
+git remote add res 	https://github.com/micln/uoj.git  
 git push -u res master
